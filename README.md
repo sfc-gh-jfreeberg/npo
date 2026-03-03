@@ -1,2 +1,3 @@
-# npo
-Super special secret project
+# NPO
+
+Super special secret project.
