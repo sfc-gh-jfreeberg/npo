@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.eggs/
+dist/
+build/
+*.egg
+*.manifest
+*.spec
+*.log
+*.sqlite3
+*.db
+*.pot
+*.mo
+*.env
+.env*
+.venv/
+venv/
+ENV/
+env/
+
+# uv
+.uv/
+uv.lock
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Test and coverage
+.coverage
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Misc
+*.bak
+*.swp
+*.swo
+*.tmp
+*.orig
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+
+# Pydantic
+__pydantic__/
