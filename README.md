@@ -1,3 +1,3 @@
 # NPO
 
-Super special secret project.
+Example code.
