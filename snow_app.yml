@@ -1,4 +1,5 @@
 runtime: 
   version: 'v0.1-cpu-py3.12'
-  dependencies: 'requirements.txt'
   # The job will be run on the warehouse associated with the active session.
+
+dependencies: 'requirements.txt'
