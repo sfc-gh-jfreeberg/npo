@@ -1,22 +1,20 @@
-from snowflake.snowpark.session import Session
+from snowflake.snowpark_connect import init_spark_session
+from snowflake.snowpark_connect.snowflake_session import SnowflakeSession
 
-def main(connection_name: str):
+def main():
     print("Running Python script")
 
-    session = Session.builder.configs({'connection_name': connection_name}).create()
-    
-    qh_df = session.sql("""SELECT *
+    spark = init_spark_session()
+    session = SnowflakeSession(spark)
+
+    session.sql("""SELECT *
                 FROM TABLE(INFORMATION_SCHEMA.QUERY_HISTORY())
                 ORDER BY start_time""") \
         .select("QUERY_ID", "QUERY_TEXT") \
-        .limit(10)
-
-    print("Hello from npo!")
-
-    qh_df.show()
+        .limit(10) \
+        .show()
 
 
 if __name__ == "__main__":
-    your_connection_name = "my_connection_name"  # Replace with the name you used in `snow connection add`
 
-    main(your_connection_name)
+    main()

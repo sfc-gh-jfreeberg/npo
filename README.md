@@ -2,10 +2,13 @@
 
 ## Setup Instructions
 
+1. Install this branch of the Snowflake CLI in your global Python installation: `pip install git+https://github.com/snowflakedb/snowflake-cli@notebook-project`
+
+    Run `snow --version` to check you have the right installation. This command should output a version with `.dev0`, for example: `3.16.0.dev0`.
+
 1. `python3 -m venv .venv`
 1. `source .venv/bin/activate`
 1. `pip install -r requirements-prod.txt -r requirements-dev.txt`
-    `requirements-dev.txt` will install the Snowflake CLI. If you haven't used the Snowflake CLI before, run `snow connection add` to connect the CLI to your Snowflake account.
 
 ## Local Development
 

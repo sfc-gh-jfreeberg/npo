@@ -1,4 +1,4 @@
 # Specify your development dependencies here. For example:
 pytest==9.0.2
 flake8==6.0.0
-snowflake-cli @ git+https://github.com/snowflakedb/snowflake-cli@notebook-project
+# snowflake-cli @ git+https://github.com/snowflakedb/snowflake-cli@notebook-project

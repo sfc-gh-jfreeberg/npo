@@ -1,1 +1,1 @@
-snowflake-snowpark-python==1.41.0
+snowpark-connect[jdk]==1.16.0
