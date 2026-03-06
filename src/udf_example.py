@@ -1,7 +1,7 @@
 from snowflake.snowpark.session import Session
 from snowflake.snowpark.functions import udf, col
 from snowflake.snowpark.types import IntegerType    
-from src.utils.udfs import count_words
+from utils.udfs import count_words
 
 def main(connection_name: str):
     
@@ -10,11 +10,14 @@ def main(connection_name: str):
     print('registering UDF...')
     
     # UDF is registered on every execution of the script
-    count_words_udf = udf(count_words, return_type=IntegerType(), imports=["src/utils/udfs.py"])
+    count_words_udf = udf(count_words, return_type=IntegerType(), 
+                          imports=["src/utils/udfs.py", "src/utils/"])
 
     print('querying and applying UDF...')
     
-    session.table("SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY") \
+    session.sql("""SELECT *
+                FROM TABLE(INFORMATION_SCHEMA.QUERY_HISTORY())
+                ORDER BY start_time""") \
         .select("QUERY_ID", "QUERY_TEXT") \
         .limit(10) \
         .with_column("WORD_COUNT", count_words_udf(col("QUERY_TEXT"))) \
