@@ -1,0 +1,42 @@
+name: Python Build
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_NAME: my_project
+      STAGE_NAME: npo_stage
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements-prod.txt
+        pip install -r requirements-dev.txt
+
+    - name: Lint with flake8
+      run: |
+        flake8 src test
+
+    - name: Run tests
+      run: |
+        pytest
+    
+    - name: Deploy to Snowflake
+      run: |
+        snow stage create "$STAGE_NAME"
+        snow stage copy --recursive --overwrite . @"$STAGE_NAME"
+        snow notebook project create "$PROJECT_NAME" --source @"$STAGE_NAME"/ --overwrite
+
