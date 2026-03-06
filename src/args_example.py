@@ -1,3 +1,7 @@
+# This is an example of using argparse to pass arguments to a Snowflake Snowpark Python script.
+# Example usage:
+# python src/args_example.py --rows 25 --wh DEX_WH
+
 import argparse
 from snowflake.snowpark.session import Session
 
@@ -11,7 +15,9 @@ def main(connection_name: str):
 
     session = Session.builder.configs({'connection_name': connection_name}).create()
 
-    qh_df = session.table("SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY") \
+    qh_df = session.sql("""SELECT *
+                FROM TABLE(INFORMATION_SCHEMA.QUERY_HISTORY())
+                ORDER BY start_time""") \
         .select("QUERY_ID", "QUERY_TEXT", "WAREHOUSE_NAME") \
         .limit(args.rows if args.rows else 10)
     

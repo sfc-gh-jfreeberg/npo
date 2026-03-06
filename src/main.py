@@ -5,10 +5,12 @@ def main(connection_name: str):
 
     session = Session.builder.configs({'connection_name': connection_name}).create()
     
-    qh_df = session.table("SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY") \
+    qh_df = session.sql("""SELECT *
+                FROM TABLE(INFORMATION_SCHEMA.QUERY_HISTORY())
+                ORDER BY start_time""") \
         .select("QUERY_ID", "QUERY_TEXT") \
         .limit(10)
-    
+
     print("Hello from npo!")
 
     qh_df.show()
