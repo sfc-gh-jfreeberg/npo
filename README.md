@@ -1,17 +1,21 @@
 # NPO
 
+This repository serves as a template project illustrating how to scaffold and set up a Python project for execution in Snowflake's Notebook Project Objects. You can extend/copy this template for your own code.
+
 ## Setup Instructions
 
 1. `python3 -m venv .venv`
 1. `source .venv/bin/activate`
 1. `pip install -r requirements-prod.txt -r requirements-dev.txt`
 
-    `requirements-dev.txt` will install the Snowflake CLI. If you haven't used the Snowflake CLI before, run `snow connection add` to connect the CLI to your Snowflake account.
+    `requirements-dev.txt` will install the Snowflake CLI. If you haven't used the Snowflake CLI before, run [`snow connection add`](https://docs.snowflake.com/en/developer-guide/snowflake-cli/command-reference/connection-commands/add-connection) to connect the CLI to your Snowflake account.
 
 ## Local Development
 
 1. Run the demo script: `python src/main.py`
+   
     Other examples are also provided: `args_example.py` shows how to pass and process command-line arguments, and `udf_example.py` shows how to register and reference UDFs.
+   
 1. Run tests: `python -m pytest`
 
 ## Deployment
