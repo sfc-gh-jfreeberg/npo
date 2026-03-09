@@ -5,6 +5,7 @@
 1. `python3 -m venv .venv`
 1. `source .venv/bin/activate`
 1. `pip install -r requirements-prod.txt -r requirements-dev.txt`
+
     `requirements-dev.txt` will install the Snowflake CLI. If you haven't used the Snowflake CLI before, run `snow connection add` to connect the CLI to your Snowflake account.
 
 ## Local Development
