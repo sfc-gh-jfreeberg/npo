@@ -5,7 +5,7 @@ from utils.udfs import count_words
 
 def main(connection_name: str):
     
-    session = Session.builder.configs({'connection_name': connection_name}).create()
+    session = Session.builder.configs({'connection_name': connection_name}).getOrCreate()
 
     print('registering UDF...')
     

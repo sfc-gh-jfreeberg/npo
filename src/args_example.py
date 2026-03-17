@@ -13,7 +13,7 @@ def main(connection_name: str):
 
     print(f"Arguments received: rows={args.rows}, wh={args.wh}")
 
-    session = Session.builder.configs({'connection_name': connection_name}).create()
+    session = Session.builder.configs({'connection_name': connection_name}).getOrCreate()
 
     qh_df = session.sql("""SELECT *
                 FROM TABLE(INFORMATION_SCHEMA.QUERY_HISTORY())
