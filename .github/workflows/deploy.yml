@@ -40,3 +40,9 @@ jobs:
         snow stage copy --recursive --overwrite . @"$STAGE_NAME"
         snow notebook project create "$PROJECT_NAME" --source @"$STAGE_NAME"/ --overwrite
 
+    - name: Schedule with a Task
+      run: |
+        snow task create "$PROJECT_NAME"_daily_task \
+          WAREHOUSE = 'COMPUTE_WH' \
+          SCHEDULE = 'USING CRON 0 0 * * * UTC' \
+          AS EXECUTE NOTEBOOK PROJECT "$PROJECT_NAME" MAIN_FILE='src/main.py'
