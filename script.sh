@@ -1,7 +1,11 @@
-stage_name=npo_stage2
-npo_name=my_project2
+# Set your desired name here
+object_name=my_python_project
 
-snow stage create $stage_name
-snow stage copy --recursive --overwrite . @$stage_name
-snow notebook project create $npo_name --source @$stage_name/ --overwrite
-snow notebook project execute $npo_name --main-file=src/main.py
+# Deploy the project to Snowflake
+snow notebook project create $object_name \
+    --source . \  # Uploads the current directory as the project source 
+    --overwrite \
+
+# Execute the main.py file in the project
+snow notebook project execute $object_name \
+    --main-file=src/main.py
