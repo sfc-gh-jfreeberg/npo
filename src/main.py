@@ -3,7 +3,7 @@ from snowflake.snowpark import Session
 
 print("Running Python script")
 
-connection_name = "dexqa6"
+connection_name = "<your_connection_name>"  # Replace with your actual connection name
 session = Session.builder.configs({'connection_name': connection_name}).getOrCreate()
 
 qh_df = session.sql("""SELECT *
