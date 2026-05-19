@@ -1,1 +1,1 @@
-snowpark-connect[jdk]==1.16.0
+snowpark-connect[jdk]==1.27.0

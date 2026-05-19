@@ -1,7 +1,13 @@
-stage_name=npo_stage_scos
-npo_name=my_scos_project
+# Set your desired name here
+object_name=my_snowpark_connect_project
 
-snow stage create $stage_name
-snow stage copy --recursive --overwrite . @$stage_name
-snow notebook project create $npo_name --source @$stage_name/ --overwrite
-snow notebook project execute $npo_name --main-file=src/main.py
+# Deploy the project to Snowflake
+snow notebook project create $object_name \
+    --source . \
+    --overwrite \
+    -c spark-connect
+
+# Execute the main.py file in the project
+snow notebook project execute $object_name \
+    --main-file=src/main.py \
+    -c spark-connect
