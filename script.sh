@@ -1,5 +1,5 @@
 # Set your desired name here
-object_name=my_snowpark_connect_project
+object_name=my_snowpark_connect_project2
 
 # Deploy the project to Snowflake
 snow notebook project create $object_name \

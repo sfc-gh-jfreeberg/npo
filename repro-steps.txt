@@ -1,0 +1,47 @@
+python3.12 -m venv .venv
+source .venv/bin/activate
+pip install snowpark-connect
+pip freeze > requirements.txt
+
+object_name=my_snowpark_connect_project2
+
+snow notebook project create $object_name \
+    --source . \
+    --overwrite \
+    -c spark-connect
+
+snow notebook project execute $object_name \
+    --main-file=src/main.py \
+    -c spark-connect
+
+/*
+╭─ Error ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ 100357: 100357: Python Interpreter Error:                                                                                 │
+│ Traceback (most recent call last):                                                                                        │
+│   File "_udf_code.py", line 150, in snowpark_project_runner                                                               │
+│     return run_project_entry_script(project_entry_script_name, project_name, project_arguments)                           │
+│            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                           │
+│   File "_udf_code.py", line 55, in run_project_entry_script                                                               │
+│     runpy.run_path(file_path, run_name="__main__")                                                                        │
+│   File "<frozen runpy>", line 287, in run_path                                                                            │
+│   File "<frozen runpy>", line 98, in _run_module_code                                                                     │
+│   File "<frozen runpy>", line 88, in _run_code                                                                            │
+│   File "/tmp/snowpark_project_src/src/main.py", line 1, in <module>                                                       │
+│     from snowflake.snowpark_connect import init_spark_session                                                             │
+│   File "<site-packages>/snowflake/snowpark_connect/__init__.py", line 11, in <module>                                     │
+│     from .server import get_session  # noqa: E402, F401                                                                   │
+│     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                                                                       │
+│   File "<site-packages>/snowflake/snowpark_connect/server.py", line 44, in <module>                                       │
+│     from pyspark.sql.connect.session import SparkSession                                                                  │
+│   File "<site-packages>/snowflake/snowpark_connect/includes/python/pyspark/sql/connect/session.py", line 19, in <module>  │
+│     check_dependencies(__name__)                                                                                          │
+│   File "<site-packages>/snowflake/snowpark_connect/includes/python/pyspark/sql/connect/utils.py", line 33, in             │
+│ check_dependencies                                                                                                        │
+│     require_minimum_pandas_version()                                                                                      │
+│   File "<site-packages>/snowflake/snowpark_connect/includes/python/pyspark/sql/pandas/utils.py", line 24, in              │
+│ require_minimum_pandas_version                                                                                            │
+│     from distutils.version import LooseVersion                                                                            │
+│ ModuleNotFoundError: No module named 'distutils'                                                                          │
+│  in function MY_SNOWPARK_CONNECT_PROJECT2 with handler snowpark_project_runner                                            │
+╰────────────────────────────────────────────────────────────────────────────────────
+*/
