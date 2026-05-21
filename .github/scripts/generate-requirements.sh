@@ -35,6 +35,7 @@ case "${project}" in
     pip install snowflake-snowpark-python
     pip install pytest
     pip freeze > "${project_dir}/requirements.txt"
+    ;;
   snowpark-connect)
     pip install 'snowpark-connect[jdk]' 'pyspark==3.5.6'
     pip freeze > "${project_dir}/requirements.txt"
