@@ -12,14 +12,11 @@ pip install 'snowflake-cli @ git+https://github.com/snowflakedb/snowflake-cli@no
 
 Notebook project commands (`snow notebook project create`, `snow notebook project execute`) require this branch until the feature is in a stable release.
 
-- A Snowflake account with access to Snowpark Connect for Spark
-- Python 3.10–3.12 (not 3.13+). Confirm your version:
+You will also need a Snowflake account with access to Snowpark Connect for Spark, and Python 3.10–3.12 (not 3.13+). Confirm your version:
 
 ```bash
 python3 --version
 ```
-
-- Java and Python on the same CPU architecture (for example, both arm64 on Apple Silicon)
 
 ## Connection configuration
 
@@ -111,6 +108,7 @@ object_name=my_snowpark_connect_job
 snow notebook project create $object_name \
     --source . \
     --overwrite \
+    --exclude ".venv" \
     -c spark-connect
 
 # Execute the main.py file in the project

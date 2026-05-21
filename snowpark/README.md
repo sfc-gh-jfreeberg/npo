@@ -12,8 +12,7 @@ pip install 'snowflake-cli @ git+https://github.com/snowflakedb/snowflake-cli@no
 
 Notebook project commands (`snow notebook project create`, `snow notebook project execute`) require this branch until the feature is in a stable release.
 
-- A Snowflake account
-- Python 3.10–3.12. Confirm your version:
+Confirm you are using Python 3.10–3.12. Confirm your version:
 
 ```bash
 python3 --version
@@ -63,8 +62,8 @@ From this directory, create a virtual environment and install dependencies:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements-prod.txt
-pip install -r requirements-dev.txt
+pip install snowflake-snowpark-python
+pip install pytest
 ```
 
 `requirements-prod.txt` is what Snowflake uses at runtime (see `snow_app.yml`). `requirements-dev.txt` adds `pytest` and `flake8` for local development.
@@ -100,7 +99,11 @@ Notebook Project Objects run on Snowflake using the warehouse associated with yo
 
 Deploy steps:
 
-1. Update `requirements-prod.txt` if you added packages to the venv.
+1. Freeze your virtual environment:
+
+    ```python
+    pip freeze > requirements.txt
+    ```
 
 2. From this directory, set `object_name` (and optionally `connection`) and run the Snowflake CLI commands below (defaults: `my_python_project`, `snowpark`):
 
@@ -111,6 +114,7 @@ connection=snowpark
 snow notebook project create "$object_name" \
     --source . \
     --overwrite \
+    --exclude ".venv" \
     -c "$connection"
 
 snow notebook project execute "$object_name" \
