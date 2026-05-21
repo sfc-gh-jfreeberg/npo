@@ -1,0 +1,53 @@
+name: Deploy sample projects
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'snowpark/**'
+      - 'snowpark-connect/**'
+      - 'snowpark-uv/**'
+      - '.github/workflows/deploy-samples.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - snowpark
+          - snowpark-connect
+          - snowpark-uv
+
+    env:
+      SNOWFLAKE_CI: "true"
+      # Key-pair auth bypasses interactive MFA in CI (password + MFA cannot run headless).
+      SNOWFLAKE_AUTHENTICATOR: SNOWFLAKE_JWT
+      SNOWFLAKE_PRIVATE_KEY_RAW: ${{ secrets.SNOWFLAKE_PRIVATE_KEY_RAW }}
+      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+      SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+      SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
+      SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+      SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: snowflakedb/snowflake-cli-action@v2
+        with:
+          cli-version: "3.16"
+
+      - name: Verify Snowflake connection
+        run: snow connection test -x
+
+      - name: Deploy ${{ matrix.project }}
+        working-directory: ${{ matrix.project }}
+        run: |
+          chmod +x deploy.sh
+          ./deploy.sh
