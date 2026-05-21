@@ -4,6 +4,14 @@ Template for running [Snowpark Connect for Spark](https://docs.snowflake.com/en/
 
 ## Prerequisites
 
+Install the development [Snowflake CLI](https://docs.snowflake.com/en/developer-guide/snowflake-cli/index) globally (outside any project virtual environment). Do not install it in the same venv as `snowpark-connect`—the two packages conflict.
+
+```bash
+pip install 'snowflake-cli @ git+https://github.com/snowflakedb/snowflake-cli@notebook-project'
+```
+
+Notebook project commands (`snow notebook project create`, `snow notebook project execute`) require this branch until the feature is in a stable release.
+
 - A Snowflake account with access to Snowpark Connect for Spark
 - Python 3.10–3.12 (not 3.13+). Confirm your version:
 
@@ -12,7 +20,6 @@ python3 --version
 ```
 
 - Java and Python on the same CPU architecture (for example, both arm64 on Apple Silicon)
-- [Snowflake CLI](https://docs.snowflake.com/en/developer-guide/snowflake-cli/index) (`snow`) for deployment
 
 ## Connection configuration
 
@@ -85,6 +92,8 @@ By default, `init_spark_session()` uses the `spark-connect` entry from your conn
 ## Deployment
 
 Notebook Project Objects run on Snowflake using the warehouse associated with your session. Runtime and dependencies are defined in `snow_app.yml` (Python 3.11, `requirements.txt`).
+
+Deploy steps:
 
 1. Pin your environment dependencies (from the activated venv):
 
