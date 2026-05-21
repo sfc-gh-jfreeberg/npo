@@ -32,13 +32,9 @@ pip install --upgrade pip
 
 case "${project}" in
   snowpark)
-    pip install 'snowflake-snowpark-python>=1.41.0'
+    pip install snowflake-snowpark-python
+    pip install pytest
     pip freeze > "${project_dir}/requirements.txt"
-    cat > "${project_dir}/requirements-dev.txt" <<'EOF'
-pytest>=8.0
-flake8>=6.0
-EOF
-    ;;
   snowpark-connect)
     pip install 'snowpark-connect[jdk]' 'pyspark==3.5.6'
     pip freeze > "${project_dir}/requirements.txt"
