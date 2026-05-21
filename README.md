@@ -1,26 +1,15 @@
-# NPO
+# Python Jobs in Snowflake
 
-This repository serves as a template project illustrating how to scaffold and set up a Python project for execution in Snowflake's Notebook Project Objects. You can extend/copy this template for your own code.
+This repository contains template projects illustrating how to scaffold and set up Python projects for execution in Snowflake's Notebook Project Objects. You can extend/copy this template for your own code.
 
-## Setup Instructions
+## Project Templates
 
-1. `python3 -m venv .venv`
-1. `source .venv/bin/activate`
-1. `pip install -r requirements-prod.txt -r requirements-dev.txt`
+Each of the links below will take you to the README file in that project template with instructions to set up, install, and deploy the project.
 
-    `requirements-dev.txt` will install the Snowflake CLI. If you haven't used the Snowflake CLI before, run [`snow connection add`](https://docs.snowflake.com/en/developer-guide/snowflake-cli/command-reference/connection-commands/add-connection) to connect the CLI to your Snowflake account.
+- [**Snowpark with requirements.txt**](snowpark/README.md)
+- [**Snowpark with uv and pyproject.toml**](snowpark-uv/README.md)
+- [**Snowpark Connect with requirements.txt**](snowpark-connect/README.md) 
 
-## Local Development
+## Feedback
 
-1. Run the demo script: `python src/main.py`
-   
-    Other examples are also provided: `args_example.py` shows how to pass and process command-line arguments, and `udf_example.py` shows how to register and reference UDFs.
-   
-1. Run tests: `python -m pytest`
-
-## Deployment
-
-1. Create a stage: `snow stage create npo_stage`
-1. Copy the project contents: `snow stage copy . @npo_stage`
-1. Create the NPO: `snow notebook project create --name 'qs_project' –location '@npo_stage/'`
-1. Execute the NPO: `snow notebook project execute -n 'qs_project'`
+For feedback or issues, please contact jason.freeberg@snowflake.com
