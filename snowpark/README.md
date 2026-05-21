@@ -60,13 +60,12 @@ See [Configure Snowflake connections](https://docs.snowflake.com/en/developer-gu
 From this directory, create a virtual environment and install dependencies:
 
 ```bash
+cd snowpark
 python3 -m venv .venv
 source .venv/bin/activate
 pip install snowflake-snowpark-python
 pip install pytest
 ```
-
-`requirements-prod.txt` is what Snowflake uses at runtime (see `snow_app.yml`). `requirements-dev.txt` adds `pytest` and `flake8` for local development.
 
 ## Local development
 

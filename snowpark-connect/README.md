@@ -60,6 +60,7 @@ See the [local IDE setup guide](https://docs.snowflake.com/en/developer-guide/sn
 From this directory, create a virtual environment and install dependencies:
 
 ```bash
+cd snowpark-connect
 python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade --force-reinstall 'snowpark-connect[jdk]'

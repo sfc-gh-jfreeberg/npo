@@ -60,6 +60,7 @@ See [Configure Snowflake connections](https://docs.snowflake.com/en/developer-gu
 From this directory, sync the project environment (creates `.venv` and installs dependencies from `pyproject.toml`):
 
 ```bash
+cd snowpark-uv
 uv sync --managed-python
 ```
 
