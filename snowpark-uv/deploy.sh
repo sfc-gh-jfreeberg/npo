@@ -1,13 +1,20 @@
-# Set your desired name here
-object_name=my_snowpark_job
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Deploy the project to Snowflake
-snow notebook project create $object_name \
+object_name=my_snowpark_job
+connection="${SNOWFLAKE_CONNECTION:-snowpark}"
+
+if [[ "${SNOWFLAKE_CI:-}" == "true" ]]; then
+  conn_args=(-x)
+else
+  conn_args=(-c "$connection")
+fi
+
+snow notebook project create "$object_name" \
     --source . \
     --overwrite \
-    -c pm-acct
+    "${conn_args[@]}"
 
-# Execute the main.py file in the project
-snow notebook project execute $object_name \
+snow notebook project execute "$object_name" \
     --main-file=src/main.py \
-    -c pm-acct
+    "${conn_args[@]}"
