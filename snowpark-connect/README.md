@@ -23,11 +23,11 @@ python3 --version
 
 ## Connection configuration
 
-Snowpark Connect reads credentials from a TOML connection file. This template expects a connection named `spark-connect` (used by `deploy.sh`).
+Snowpark Connect reads credentials from a TOML connection file. This template expects a connection named `spark-connect` (passed as `-c spark-connect` when deploying).
 
 ### Option 1: Snowflake CLI
 
-```bash
+```bashs
 snow connection add
 ```
 
@@ -101,15 +101,24 @@ Deploy steps:
 pip freeze > requirements.txt
 ```
 
-2. Edit `deploy.sh` if you want a different project name (default: `my_snowpark_connect_job`).
-
-3. Deploy and execute:
+2. From this directory, set `object_name` and run the Snowflake CLI commands below (default name: `my_snowpark_connect_job`):
 
 ```bash
-chmod +x deploy.sh
-./deploy.sh
+# Set your desired name here
+object_name=my_snowpark_connect_job
+
+# Deploy the project to Snowflake
+snow notebook project create $object_name \
+    --source . \
+    --overwrite \
+    -c spark-connect
+
+# Execute the main.py file in the project
+snow notebook project execute $object_name \
+    --main-file=main.py \
+    -c spark-connect
 ```
 
-`deploy.sh` creates (or overwrites) the notebook project from the current directory and runs `main.py`, using the `spark-connect` Snowflake CLI connection.
+`snow notebook project create` uploads this directory and creates (or overwrites) the notebook project. `snow notebook project execute` runs `main.py` on Snowflake using the `spark-connect` connection.
 
 For more on notebook projects, see [Snowflake Notebook Project Objects](https://docs.snowflake.com/en/developer-guide/snowflake-ml/notebooks-projects).
