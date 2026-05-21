@@ -8,7 +8,8 @@ Each of the links below will take you to the README file in that project templat
 
 - [**Snowpark with requirements.txt**](snowpark/README.md)
 - [**Snowpark with uv and pyproject.toml**](snowpark-uv/README.md)
-- [**Snowpark Connect with requirements.txt**](snowpark-connect/README.md) 
+- [**Snowpark Connect with requirements.txt**](snowpark-connect/README.md)
+- [**Snowpark Connect with uv and pyproject.toml**](snowpark-connect-uv/README.md)
 
 ## Feedback
 

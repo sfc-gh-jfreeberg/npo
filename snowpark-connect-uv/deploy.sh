@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-object_name=my_python_project
-connection="${SNOWFLAKE_CONNECTION:-snowpark}"
+object_name=my_snowpark_connect_uv_job
+connection="${SNOWFLAKE_CONNECTION:-spark-connect}"
 
 if [[ "${SNOWFLAKE_CI:-}" == "true" ]]; then
   conn_args=(-x)
@@ -13,9 +13,8 @@ fi
 snow notebook project create "$object_name" \
     --source . \
     --overwrite \
-    --exclude ".venv" \
     "${conn_args[@]}"
 
 snow notebook project execute "$object_name" \
-    --main-file=src/main.py \
+    --main-file=main.py \
     "${conn_args[@]}"

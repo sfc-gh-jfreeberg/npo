@@ -13,6 +13,7 @@ fi
 snow notebook project create "$object_name" \
     --source . \
     --overwrite \
+    --exclude ".venv" \
     "${conn_args[@]}"
 
 snow notebook project execute "$object_name" \

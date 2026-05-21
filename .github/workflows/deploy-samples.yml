@@ -8,6 +8,7 @@ on:
       - 'snowpark/**'
       - 'snowpark-connect/**'
       - 'snowpark-uv/**'
+      - 'snowpark-connect-uv/**'
       - '.github/workflows/deploy-samples.yml'
 
 permissions:
@@ -23,6 +24,7 @@ jobs:
           - snowpark
           - snowpark-connect
           - snowpark-uv
+          - snowpark-connect-uv
 
     env:
       SNOWFLAKE_CI: "true"
@@ -45,6 +47,16 @@ jobs:
 
       - name: Verify Snowflake connection
         run: snow connection test -x
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ (matrix.project == 'snowpark-connect' || matrix.project == 'snowpark-connect-uv') && '3.11' || '3.12' }}
+
+      - name: Generate requirements
+        if: matrix.project != 'snowpark-uv' && matrix.project != 'snowpark-connect-uv'
+        run: |
+          chmod +x .github/scripts/generate-requirements.sh
+          .github/scripts/generate-requirements.sh ${{ matrix.project }}
 
       - name: Deploy ${{ matrix.project }}
         working-directory: ${{ matrix.project }}

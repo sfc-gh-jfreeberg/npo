@@ -1,0 +1,92 @@
+name: Test sample projects
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'snowpark/**'
+      - 'snowpark-connect/**'
+      - 'snowpark-uv/**'
+      - 'snowpark-connect-uv/**'
+      - '.github/workflows/test.yml'
+      - '.github/scripts/generate-requirements.sh'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'snowpark/**'
+      - 'snowpark-connect/**'
+      - 'snowpark-uv/**'
+      - 'snowpark-connect-uv/**'
+      - '.github/workflows/test.yml'
+      - '.github/scripts/generate-requirements.sh'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: snowpark
+            python-version: '3.12'
+          - project: snowpark-connect
+            python-version: '3.11'
+          - project: snowpark-uv
+            python-version: '3.12'
+          - project: snowpark-connect-uv
+            python-version: '3.11'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Generate requirements
+        if: matrix.project != 'snowpark-uv' && matrix.project != 'snowpark-connect-uv'
+        run: |
+          chmod +x .github/scripts/generate-requirements.sh
+          .github/scripts/generate-requirements.sh ${{ matrix.project }}
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.project }}
+        run: |
+          case "${{ matrix.project }}" in
+            snowpark|snowpark-connect)
+              python -m venv .venv
+              .venv/bin/pip install -r requirements.txt
+              if [[ "${{ matrix.project }}" == "snowpark" ]]; then
+                .venv/bin/pip install -r requirements-dev.txt
+              fi
+              ;;
+            snowpark-uv|snowpark-connect-uv)
+              pip install uv
+              uv sync --managed-python
+              ;;
+          esac
+
+      - name: Run tests
+        working-directory: ${{ matrix.project }}
+        run: |
+          case "${{ matrix.project }}" in
+            snowpark)
+              .venv/bin/pytest
+              ;;
+            snowpark-uv)
+              uv run pytest
+              ;;
+            snowpark-connect|snowpark-connect-uv)
+              .venv/bin/python -c "from snowflake import snowpark_connect; import pyspark"
+              ;;
+          esac
+
+      - name: Upload generated requirements
+        if: matrix.project != 'snowpark-uv' && matrix.project != 'snowpark-connect-uv'
+        uses: actions/upload-artifact@v4
+        with:
+          name: requirements-${{ matrix.project }}
+          path: |
+            ${{ matrix.project }}/requirements.txt
+            ${{ matrix.project }}/requirements-dev.txt
+          if-no-files-found: ignore

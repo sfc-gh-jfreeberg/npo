@@ -30,6 +30,11 @@ env/
 .uv/
 uv.lock
 
+# Generated from local venv or CI (see .github/scripts/generate-requirements.sh)
+snowpark/requirements.txt
+snowpark/requirements-dev.txt
+snowpark-connect/requirements.txt
+
 # VS Code
 .vscode/
 
