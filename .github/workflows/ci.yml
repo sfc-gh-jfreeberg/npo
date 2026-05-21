@@ -1,0 +1,78 @@
+name: Sample projects CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'snowpark/**'
+      - 'snowpark-connect/**'
+      - 'snowpark-uv/**'
+      - 'snowpark-connect-uv/**'
+      - '.github/workflows/ci.yml'
+      - '.github/scripts/ci-install-sample.sh'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'snowpark/**'
+      - 'snowpark-connect/**'
+      - 'snowpark-uv/**'
+      - 'snowpark-connect-uv/**'
+      - '.github/workflows/ci.yml'
+      - '.github/scripts/ci-install-sample.sh'
+
+permissions:
+  contents: read
+
+jobs:
+  notebook-samples:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: snowpark
+            python-version: '3.12'
+          - project: snowpark-connect
+            python-version: '3.11'
+          - project: snowpark-uv
+            python-version: '3.12'
+          - project: snowpark-connect-uv
+            python-version: '3.11'
+
+    env:
+      # Key-pair auth for headless CI (see .github/scripts/setup-snowflake-ci-secrets.sh).
+      SNOWFLAKE_CI: 'true'
+      SNOWFLAKE_AUTHENTICATOR: SNOWFLAKE_JWT
+      SNOWFLAKE_PRIVATE_KEY_RAW: ${{ secrets.SNOWFLAKE_PRIVATE_KEY_RAW }}
+      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+      SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+      SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
+      SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+      SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Snowflake CLI (notebook-project branch per sample README)
+        run: |
+          pip install 'snowflake-cli @ git+https://github.com/snowflakedb/snowflake-cli@notebook-project'
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Install environment as documented in README and freeze pip projects
+        run: bash .github/scripts/ci-install-sample.sh "${{ matrix.project }}"
+
+      - name: Notebook project — create & execute on Snowflake
+        if: ${{ secrets.SNOWFLAKE_ACCOUNT != '' }}
+        working-directory: ${{ matrix.project }}
+        run: |
+          snow connection test -x
+          chmod +x deploy.sh
+          ./deploy.sh

@@ -30,7 +30,7 @@ env/
 .uv/
 uv.lock
 
-# Generated from local venv or CI (see .github/scripts/generate-requirements.sh)
+# Produced by README flow / CI: `pip freeze > requirements.txt` from the sample venv before deploy
 snowpark/requirements.txt
 snowpark/requirements-dev.txt
 snowpark-connect/requirements.txt

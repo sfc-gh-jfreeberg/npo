@@ -24,7 +24,7 @@ Snowpark Connect reads credentials from a TOML connection file. This template ex
 
 ### Option 1: Snowflake CLI
 
-```bashs
+```bash
 snow connection add
 ```
 

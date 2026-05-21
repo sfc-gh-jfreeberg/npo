@@ -1,6 +1,6 @@
 # Snowpark
 
-Template for running [Snowpark for Python](https://docs.snowflake.com/en/developer-guide/snowpark/python/setup) locally or deploying as a Snowflake Notebook Project Object. Dependencies are managed with `requirements-prod.txt` and `requirements-dev.txt`.
+Template for running [Snowpark for Python](https://docs.snowflake.com/en/developer-guide/snowpark/python/setup) locally or deploying as a Snowflake Notebook Project Object. Install dependencies into a virtual environment (`pip install` as shown below); the Notebook Project deployment uses pinned dependencies in `requirements.txt` (`pip freeze` after install).
 
 ## Prerequisites
 
@@ -94,7 +94,7 @@ Additional examples live under `src/` (`udf_example.py`, `args_example.py`).
 
 ## Deployment
 
-Notebook Project Objects run on Snowflake using the warehouse associated with your session. Runtime and dependencies are defined in `snow_app.yml` (Python 3.12, `requirements-prod.txt`).
+Notebook Project Objects run on Snowflake using the warehouse associated with your session. Runtime and dependencies are defined in `snow_app.yml` (Python 3.12, `requirements.txt`).
 
 Deploy steps:
 
