@@ -30,6 +30,11 @@ env/
 .uv/
 uv.lock
 
+# Produced by README flow / CI: `pip freeze > requirements.txt` from the sample venv before deploy
+snowpark/requirements.txt
+snowpark/requirements-dev.txt
+snowpark-connect/requirements.txt
+
 # VS Code
 .vscode/
 

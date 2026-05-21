@@ -1,6 +1,5 @@
 runtime: 
   version: 'python_3.12'
-  
   # The project object will run on the warehouse associated with the active session.
 
-dependencies: 'requirements-prod.txt'
+dependencies: 'requirements.txt'  # Run `pip freeze > requirements.txt` to update this file

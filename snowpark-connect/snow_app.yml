@@ -1,0 +1,6 @@
+runtime: 
+  version: 'python_3.11'
+  
+  # The project object will run on the warehouse associated with the active session.
+
+dependencies: 'requirements.txt'
