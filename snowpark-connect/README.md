@@ -63,7 +63,7 @@ From this directory, create a virtual environment and install dependencies:
 cd snowpark-connect
 python3 -m venv .venv
 source .venv/bin/activate
-pip install --upgrade --force-reinstall 'snowpark-connect[jdk]'
+pip install snowpark-connect
 pip install pyspark==3.5.6
 ```
 

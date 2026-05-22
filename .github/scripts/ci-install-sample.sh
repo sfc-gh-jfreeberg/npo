@@ -31,7 +31,7 @@ case "${project}" in
     # README: venv + snowpark-connect[jdk] + pyspark==3.5.6; deploy pins with pip freeze
     "${PY}" -m venv .venv
     .venv/bin/pip install --upgrade pip
-    .venv/bin/pip install --upgrade --force-reinstall 'snowpark-connect[jdk]'
+    .venv/bin/pip install --upgrade --force-reinstall snowpark-connect
     .venv/bin/pip install pyspark==3.5.6
     .venv/bin/pip freeze >requirements.txt
     .venv/bin/python -c 'from snowflake import snowpark_connect; import pyspark'
