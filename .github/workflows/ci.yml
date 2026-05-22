@@ -70,7 +70,7 @@ jobs:
         run: bash .github/scripts/ci-install-sample.sh "${{ matrix.project }}"
 
       - name: Notebook project — create & execute on Snowflake
-        if: ${{ secrets.SNOWFLAKE_ACCOUNT != '' }}
+        if: ${{ env.SNOWFLAKE_ACCOUNT != '' }}
         working-directory: ${{ matrix.project }}
         run: |
           snow connection test -x
