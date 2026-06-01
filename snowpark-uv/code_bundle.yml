@@ -1,0 +1,9 @@
+bundle:
+  type: python
+  
+  runs_on:
+    warehouse: "MY_WAREHOUSE"  # replace with your warehouse name
+    python_version: "3.11"
+
+  properties:
+    python_packages: 'pyproject.toml'
