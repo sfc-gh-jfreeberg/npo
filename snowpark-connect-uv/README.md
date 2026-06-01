@@ -66,7 +66,7 @@ uv sync --managed-python
 
 The `snowpark-connect` package bundles PySpark, but `pyproject.toml` also pins `pyspark==3.5.6` for IDE features (for example, IntelliSense) and direct PySpark imports in your code.
 
-Runtime dependencies for Snowflake deploys are read from `pyproject.toml` (see `snow_app.yml`).
+Runtime dependencies for Snowflake deploys are read from `pyproject.toml` (see `code_bundle.yml`).
 
 Do not install the Snowflake CLI in the same environment as `snowpark-connect`—the two packages conflict. Use `uv tool install` for the CLI instead.
 
@@ -90,7 +90,7 @@ By default, `init_spark_session()` uses the `spark-connect` entry from your conn
 
 ## Deployment
 
-Notebook Project Objects run on Snowflake using the warehouse associated with your session. Runtime and dependencies are defined in `snow_app.yml` (Python 3.11, `pyproject.toml`).
+Notebook Project Objects run on Snowflake using the warehouse associated with your session. Runtime and dependencies are defined in `code_bundle.yml` (Python 3.11, `pyproject.toml`).
 
 Deploy steps:
 

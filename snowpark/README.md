@@ -94,7 +94,7 @@ Additional examples live under `src/` (`udf_example.py`, `args_example.py`).
 
 ## Deployment
 
-Notebook Project Objects run on Snowflake using the warehouse associated with your session. Runtime and dependencies are defined in `snow_app.yml` (Python 3.12, `requirements.txt`).
+Notebook Project Objects run on Snowflake using the warehouse associated with your session. Runtime and dependencies are defined in `code_bundle.yml` (Python 3.12, `requirements.txt`).
 
 Deploy steps:
 

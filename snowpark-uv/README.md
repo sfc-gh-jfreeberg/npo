@@ -70,7 +70,7 @@ To add development tools (for example, `pytest`):
 uv add --dev pytest
 ```
 
-Runtime dependencies for Snowflake deploys are read from `pyproject.toml` (see `snow_app.yml`).
+Runtime dependencies for Snowflake deploys are read from `pyproject.toml` (see `code_bundle.yml`).
 
 ## Local development
 
@@ -97,7 +97,7 @@ Additional examples live under `src/` (`udf_example.py`, `args_example.py`).
 
 ## Deployment
 
-Notebook Project Objects run on Snowflake using the warehouse associated with your session. Runtime and dependencies are defined in `snow_app.yml` (Python 3.12, `pyproject.toml`).
+Notebook Project Objects run on Snowflake using the warehouse associated with your session. Runtime and dependencies are defined in `code_bundle.yml` (Python 3.12, `pyproject.toml`).
 
 Deploy steps:
 

@@ -1,0 +1,1 @@
+snowpark-connect==1.28.0
