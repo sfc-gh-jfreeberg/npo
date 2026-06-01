@@ -89,7 +89,7 @@ By default, `init_spark_session()` uses the `spark-connect` entry from your conn
 
 ## Deployment
 
-Notebook Project Objects run on Snowflake using the warehouse associated with your session. Runtime and dependencies are defined in `snow_app.yml` (Python 3.11, `requirements.txt`).
+Notebook Project Objects run on Snowflake using the warehouse associated with your session. Runtime and dependencies are defined in `code_bundle.yml` (Python 3.11, `requirements.txt`).
 
 Deploy steps:
 

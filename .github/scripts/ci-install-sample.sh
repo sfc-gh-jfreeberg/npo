@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install each sample exactly as documented in its README, then freeze when `snow_app.yml`
+# Install each sample exactly as documented in its README, then freeze when `code_bundle.yml`
 # declares `dependencies: requirements.txt`.
 set -euo pipefail
 
